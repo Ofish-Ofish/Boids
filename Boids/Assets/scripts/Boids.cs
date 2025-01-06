@@ -7,10 +7,10 @@ public class Boids : MonoBehaviour
     public Vector3 steer;
     private Transform transform;
     private GameObject[] boids;
-
-    private float viewRadius = 5.0f;
     private float viewLengh = 10.0f;
 
+    private float fieldOfView = 82.5f
+    
     private Vector3 separation;
     private Vector3 alignment;
     private Vector3 cohesion;
@@ -37,7 +37,6 @@ public class Boids : MonoBehaviour
             if(InFieldOfView(boid)) {
                 inView++;
                 alignment += boid.GetComponent<Boids>().steer;
-                alignment += boid.GetComponent<Boids>().steer;
             }
         }
 
@@ -54,30 +53,42 @@ public class Boids : MonoBehaviour
 
     private bool InFieldOfView(GameObject boid)
     {
-        Vector3 coneStartingPoint = transform.position;
-        Vector3 coneBaseCenter = transform.position + transform.forward * viewLengh;
-        Vector3 normalizedConeDir = Vector3.Normalize(coneBaseCenter - coneStartingPoint);
-        Vector3 pointToaxis = boid.transform.position - coneStartingPoint;
-        float Projection = Vector3.Dot(pointToaxis, normalizedConeDir);
+        // Vector3 coneStartingPoint = transform.position;
+        // Vector3 coneBaseCenter = transform.position + transform.forward * viewLengh;
+        // Vector3 normalizedConeDir = Vector3.Normalize(coneBaseCenter - coneStartingPoint);
+        // Vector3 pointToaxis = boid.transform.position - coneStartingPoint;
+        // float Projection = Vector3.Dot(pointToaxis, normalizedConeDir);
 
-        print("Projection: " + Projection);
+        // print("Projection: " + Projection);
 
 
-        if (Projection < 0 || Projection > viewLengh)
+        // if (Projection < 0 || Projection > viewLengh)
+        // {
+        //     return false;
+        // }
+        // float radicalDistance = Vector3.Magnitude(pointToaxis - Projection * normalizedConeDir);
+        // float projectionRadius = (viewRadius/viewLengh) * Projection;
+
+        // print("radicalDistance: " + radicalDistance);
+        // print("projectionRadius: " + projectionRadius);
+
+        // if (radicalDistance < projectionRadius)
+        // {
+        //     return true;
+        // }
+        // return false;
+
+        float dist = Vector3.Distance(boid.transform.position, transform.position);
+        if (dist > viewLengh)
         {
             return false;
         }
-        float radicalDistance = Vector3.Magnitude(pointToaxis - Projection * normalizedConeDir);
-        float projectionRadius = (viewRadius/viewLengh) * Projection;
-
-        print("radicalDistance: " + radicalDistance);
-        print("projectionRadius: " + projectionRadius);
-
-        if (radicalDistance < projectionRadius)
+        float angle = Vector3.Angle(transform.forward, boid.transform.position - transform.position);
+        if (angle > fieldOfView)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
 
