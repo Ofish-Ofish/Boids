@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 public class Boids : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private Vector3 steer;
+    public Vector3 steer;
     private Transform transform;
     private GameObject[] boids;
 
@@ -16,7 +16,7 @@ public class Boids : MonoBehaviour
 
         transform = GetComponent<Transform>();
         boids = GameObject.FindGameObjectsWithTag("boid");
-        steer = new Vector3(Random.Range(0.0f, 360.0f), 0, Random.Range(0.0f, 360.0f));
+        steer = new Vector3(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
 
     // Update is called once per frame
@@ -29,19 +29,19 @@ public class Boids : MonoBehaviour
                 continue;
             }
 
-            // alignment += boid.transform.rotation.eulerAngles;
+            alignment += boid.GetComponent<Boids>().steer;
 
         }
 
         // print(alignment);
-        // // alignment = alignment / (boids.Length -1);
-        // // print(alignment);
-        // alignment = Vector3.zero;
-    }
+        if (boids.Length > 2)
+            alignment = alignment / (boids.Length -1);
+            steer = Vector3.Lerp(steer, alignment, Time.deltaTime);
 
-    private void FixedUpdate() {
-        transform.position +=  transform.up;
-        transform.rotation = Quaternion.Euler(steer);
+
+        transform.position +=  steer * Time.deltaTime;
+        transform.rotation = Quaternion.LookRotation(steer);
+        
     }
 
     private Vector3 Seperation() {
