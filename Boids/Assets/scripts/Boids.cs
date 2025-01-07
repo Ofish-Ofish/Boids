@@ -7,10 +7,9 @@ public class Boids : MonoBehaviour
     public Vector3 steer;
 
     public float inView;
-    float maxSpeed = 5.0f;
-    private Transform transform;
+    float maxSpeed = 3f;
     private GameObject[] boids;
-    private float viewLengh = 10.0f;
+    private float viewLengh = 100.0f;
 
     private float fieldOfView = 82.5f;
     
@@ -19,10 +18,9 @@ public class Boids : MonoBehaviour
     private Vector3 cohesion;
     void Start()
     {
-
-        transform = GetComponent<Transform>();
         boids = GameObject.FindGameObjectsWithTag("boid");
         steer = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
+        transform.position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
     }
 
     // Update is called once per frame
@@ -31,11 +29,6 @@ public class Boids : MonoBehaviour
         inView = 0;
         alignment = Vector3.zero;
         cohesion = Vector3.zero;
-
-        if(steer.magnitude > maxSpeed) {
-            steer = steer.normalized * maxSpeed;
-        }
-
 
         foreach (GameObject boid in boids)
         {
@@ -49,17 +42,25 @@ public class Boids : MonoBehaviour
                 inView++;
                 alignment += boid.GetComponent<Boids>().steer;
                 cohesion += boid.transform.position - transform.position;
+                Vector3 relativePos = boid.transform.position - transform.position;
+                separation += 1/(relativePos.magnitude) * relativePos.normalized;
             }
         }
         if (inView > 0) {
             alignment = alignment / inView;
             cohesion = cohesion / inView;
+            
 
 
 
 
-            steer += Vector3.Slerp(steer, (alignment), 0.1f);
-            steer += Vector3.Slerp(steer, (cohesion), 0.1f);
+            steer += Vector3.Slerp(steer, alignment, 0.1f);
+            steer += Vector3.Slerp(steer, cohesion, 0.1f);
+            steer += Vector3.Slerp(steer, -separation, 0.1f);
+        }
+
+        if(steer.magnitude > maxSpeed) {
+            steer = steer.normalized * maxSpeed;
         }
 
         transform.position +=  steer * Time.deltaTime;
