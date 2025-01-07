@@ -5,11 +5,14 @@ public class Boids : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 steer;
+
+    public float inView;
+    float maxSpeed = 5.0f;
     private Transform transform;
     private GameObject[] boids;
     private float viewLengh = 10.0f;
 
-    private float fieldOfView = 82.5f
+    private float fieldOfView = 82.5f;
     
     private Vector3 separation;
     private Vector3 alignment;
@@ -19,13 +22,21 @@ public class Boids : MonoBehaviour
 
         transform = GetComponent<Transform>();
         boids = GameObject.FindGameObjectsWithTag("boid");
-        steer = new Vector3(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+        steer = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
     }
 
     // Update is called once per frame
     void Update()
     {
-        int inView = 0;
+        inView = 0;
+        alignment = Vector3.zero;
+        cohesion = Vector3.zero;
+
+        if(steer.magnitude > maxSpeed) {
+            steer = steer.normalized * maxSpeed;
+        }
+
+
         foreach (GameObject boid in boids)
         {
             if (boid == gameObject)
@@ -37,13 +48,18 @@ public class Boids : MonoBehaviour
             if(InFieldOfView(boid)) {
                 inView++;
                 alignment += boid.GetComponent<Boids>().steer;
+                cohesion += boid.transform.position - transform.position;
             }
         }
-
-        print("inView: " + inView);
-        if (inView > 1) {
+        if (inView > 0) {
             alignment = alignment / inView;
-            steer = Vector3.Lerp(steer, alignment, Time.deltaTime);
+            cohesion = cohesion / inView;
+
+
+
+
+            steer += Vector3.Slerp(steer, (alignment), 0.1f);
+            steer += Vector3.Slerp(steer, (cohesion), 0.1f);
         }
 
         transform.position +=  steer * Time.deltaTime;
@@ -53,30 +69,6 @@ public class Boids : MonoBehaviour
 
     private bool InFieldOfView(GameObject boid)
     {
-        // Vector3 coneStartingPoint = transform.position;
-        // Vector3 coneBaseCenter = transform.position + transform.forward * viewLengh;
-        // Vector3 normalizedConeDir = Vector3.Normalize(coneBaseCenter - coneStartingPoint);
-        // Vector3 pointToaxis = boid.transform.position - coneStartingPoint;
-        // float Projection = Vector3.Dot(pointToaxis, normalizedConeDir);
-
-        // print("Projection: " + Projection);
-
-
-        // if (Projection < 0 || Projection > viewLengh)
-        // {
-        //     return false;
-        // }
-        // float radicalDistance = Vector3.Magnitude(pointToaxis - Projection * normalizedConeDir);
-        // float projectionRadius = (viewRadius/viewLengh) * Projection;
-
-        // print("radicalDistance: " + radicalDistance);
-        // print("projectionRadius: " + projectionRadius);
-
-        // if (radicalDistance < projectionRadius)
-        // {
-        //     return true;
-        // }
-        // return false;
 
         float dist = Vector3.Distance(boid.transform.position, transform.position);
         if (dist > viewLengh)
