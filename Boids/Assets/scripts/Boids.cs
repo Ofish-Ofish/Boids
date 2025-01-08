@@ -9,9 +9,9 @@ public class Boids : MonoBehaviour
     public float inView;
     float maxSpeed = 3f;
     private GameObject[] boids;
-    private float viewLengh = 100.0f;
+    private float viewLengh = 20.0f;
 
-    private float fieldOfView = 82.5f;
+    private float fieldOfView = 160.0f;
     
     private Vector3 separation;
     private Vector3 alignment;
@@ -20,7 +20,7 @@ public class Boids : MonoBehaviour
     {
         boids = GameObject.FindGameObjectsWithTag("boid");
         steer = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
-        transform.position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        transform.position = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30));
     }
 
     // Update is called once per frame
@@ -50,6 +50,7 @@ public class Boids : MonoBehaviour
             alignment = alignment / inView;
             cohesion = cohesion / inView;
             
+            
 
 
 
@@ -62,6 +63,8 @@ public class Boids : MonoBehaviour
         if(steer.magnitude > maxSpeed) {
             steer = steer.normalized * maxSpeed;
         }
+
+        ObsticleAvoidance();
 
         transform.position +=  steer * Time.deltaTime;
         transform.rotation = Quaternion.LookRotation(steer);
@@ -82,6 +85,13 @@ public class Boids : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private Vector3 ObsticleAvoidance()
+    {
+        Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
+        Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
+        return Vector3.zero;
     }
 
 
