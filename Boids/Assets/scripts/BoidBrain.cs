@@ -1,26 +1,32 @@
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public class Boids : MonoBehaviour
+public class BoidBrain : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 steer;
-
     public float inView;
-    float maxSpeed = 3f;
+    [HideInInspector] public float maxSpeed;
     private GameObject[] boids;
-    private float viewLengh = 20.0f;
+    [HideInInspector] public float viewLengh;
 
-    private float fieldOfView = 160.0f;
+    [HideInInspector] public float sepetaionDistance;
+
+    [HideInInspector] public float fieldOfView;
     
     private Vector3 separation;
     private Vector3 alignment;
     private Vector3 cohesion;
+
+    [HideInInspector] public float alignmentWeight;
+    [HideInInspector] public float cohesionWeight;
+    [HideInInspector] public float separationWeight;
+
+
     void Start()
     {
         boids = GameObject.FindGameObjectsWithTag("boid");
-        steer = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
-        transform.position = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30));
+        steer = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed)).normalized * maxSpeed;
     }
 
     // Update is called once per frame
@@ -40,11 +46,14 @@ public class Boids : MonoBehaviour
 
             if(InFieldOfView(boid)) {
                 inView++;
-                alignment += boid.GetComponent<Boids>().steer;
+                alignment += boid.GetComponent<BoidBrain>().steer;
                 cohesion += boid.transform.position - transform.position;
                 Vector3 relativePos = boid.transform.position - transform.position;
-                separation += 1/(relativePos.magnitude) * relativePos.normalized;
+                if (relativePos.magnitude < sepetaionDistance) {
+                    separation += 1/(relativePos.magnitude) * -relativePos.normalized;
+                }
             }
+
         }
         if (inView > 0) {
             alignment = alignment / inView;
@@ -54,14 +63,11 @@ public class Boids : MonoBehaviour
 
 
 
-
-            steer += Vector3.Slerp(steer, alignment, 0.1f);
-            steer += Vector3.Slerp(steer, cohesion, 0.1f);
-            steer += Vector3.Slerp(steer, -separation, 0.1f);
-        }
-
-        if(steer.magnitude > maxSpeed) {
-            steer = steer.normalized * maxSpeed;
+            Vector3 weigtedForces = alignment * alignmentWeight + cohesion * cohesionWeight + separation * separationWeight;
+            weigtedForces = weigtedForces.normalized * maxSpeed;
+            steer = Vector3.Slerp(steer, weigtedForces, Time.deltaTime);
+            // steer = Vector3.Slerp(steer, cohesion, Time.deltaTime);
+            // steer = Vector3.Slerp(steer, -separation, Time.deltaTime);
         }
 
         ObsticleAvoidance();
