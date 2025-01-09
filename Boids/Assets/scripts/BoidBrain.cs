@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -17,10 +19,11 @@ public class BoidBrain : MonoBehaviour
     private Vector3 separation;
     private Vector3 alignment;
     private Vector3 cohesion;
-
     [HideInInspector] public float alignmentWeight;
     [HideInInspector] public float cohesionWeight;
     [HideInInspector] public float separationWeight;
+
+    [HideInInspector] public int rayCount = 200;
 
 
     void Start()
@@ -97,6 +100,22 @@ public class BoidBrain : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
         Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
+        Vector3[] points = new Vector3[rayCount];
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            float indices = i + .5f;
+            float phi = Mathf.Acos(1-2*indices/rayCount);
+            float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
+
+            points[i] = new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position;
+            Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
+        }
+
+        Debug.Log(points);
+
+        
+
         return Vector3.zero;
     }
 

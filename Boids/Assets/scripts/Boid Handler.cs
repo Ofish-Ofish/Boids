@@ -45,7 +45,7 @@ public class BoidHandler : MonoBehaviour
         foreach (GameObject boid in boids)
         {
 
-            BoidBrain boidScript = boid.GetComponent<BoidBrain>();
+            BoidBrain boidScript = boid.GetComponent<BoidBrain>();  
             boidScript.alignmentWeight = alignmentWeight;
             boidScript.cohesionWeight = cohesionWeight;
             boidScript.separationWeight = separationWeight;

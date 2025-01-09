@@ -154,7 +154,7 @@ MonoBehaviour:
   Maxspeed: 5
   ViewLength: 50
   FieldOfView: 160
-  BoidCount: 80
+  BoidCount: 1
   sepetaionDistance: 10
   boidPrefab: {fileID: 643566248072515131, guid: ca6115f3eccc1e1468bc5e88a1be7ae1,
     type: 3}
