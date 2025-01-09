@@ -111,11 +111,6 @@ public class BoidBrain : MonoBehaviour
             points[i] = new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position;
             Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
         }
-
-        Debug.Log(points);
-
-        
-
         return Vector3.zero;
     }
 
