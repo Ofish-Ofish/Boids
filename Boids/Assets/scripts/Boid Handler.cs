@@ -10,12 +10,13 @@ public class BoidHandler : MonoBehaviour
 
     public float Maxspeed;
 
-    public float ViewLength;
+    public float viewLength;
     public float FieldOfView;
 
     public int BoidCount;
-
     public float sepetaionDistance;
+
+    public float sphereColliderRadius;
     [SerializeField] private GameObject boidPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,7 +25,7 @@ public class BoidHandler : MonoBehaviour
         boids = new GameObject[BoidCount];
         for (int i = 0; i < BoidCount; i++)
         {
-            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-30, 30), Random.Range(-30, 30), Random.Range(-30, 30)), Quaternion.identity);
+            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-30, 30), Random.Range(1, 30), Random.Range(-30, 30)), Quaternion.identity);
         }
 
         settingsChanges();
@@ -50,9 +51,10 @@ public class BoidHandler : MonoBehaviour
             boidScript.cohesionWeight = cohesionWeight;
             boidScript.separationWeight = separationWeight;
             boidScript.maxSpeed = Maxspeed;
-            boidScript.viewLengh = ViewLength;
+            boidScript.viewLengh = viewLength;
             boidScript.fieldOfView = FieldOfView;
             boidScript.sepetaionDistance = sepetaionDistance;
+            boidScript.sphereColliderRadius = sphereColliderRadius;
             
 
         }
