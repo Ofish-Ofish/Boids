@@ -23,7 +23,7 @@ public class BoidBrain : MonoBehaviour
     [HideInInspector] public float cohesionWeight;
     [HideInInspector] public float separationWeight;
 
-    [HideInInspector] public int rayCount = 200;
+    [HideInInspector] public int rayCount = 50;
 
 
     void Start()
@@ -98,21 +98,45 @@ public class BoidBrain : MonoBehaviour
 
     private Vector3 ObsticleAvoidance()
     {
-        Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
-        Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
-        Vector3[] points = new Vector3[rayCount];
+        // Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
+        // Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
+         Collider[] hitColliders = Physics.OverlapSphere(transform.position, viewLengh);
 
-        for (int i = 0; i < rayCount; i++)
+        foreach (var hitCollider in hitColliders)
         {
-            float indices = i + .5f;
-            float phi = Mathf.Acos(1-2*indices/rayCount);
-            float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
+            if (Vector3.Angle(transform.forward, hitCollider.transform.position - transform.position) > fieldOfView)
+            {
+                return Vector3.zero;
+            }
 
-            points[i] = new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position;
-            Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
+            // geenrate the points on the sphere,, order then from least extreme angle to most extreme angle, remove any that are too extreme > fieldOfView. pick the first one that is not blocked by an obsticle. if they are all blocked return the most extreme one.
+
         }
+
+
+
+        // Vector3[] points = new Vector3[rayCount];
+        // for (int i = 0; i < rayCount; i++)
+        // {
+        //     float indices = i + .5f;
+        //     float phi = Mathf.Acos(1-2*indices/rayCount);
+        //     float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
+
+        //     points[i] = new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position;
+        //     Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
+        // }
         return Vector3.zero;
     }
+
+    void OnDrawGizmos()
+    {
+        // Set the Gizmo color (optional)
+        Gizmos.color = Color.green;
+
+        // Draw a wireframe sphere at the position of the object
+        Gizmos.DrawWireSphere(transform.position, viewLengh);
+    }
+
 
 
 }
