@@ -48,9 +48,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steer: {x: 0, y: 0, z: 0}
   inView: 0
+  maxSpeed: 0
+  viewLengh: 0
+  sepetaionDistance: 0
+  fieldOfView: 0
   alignmentWeight: 0
   cohesionWeight: 0
   separationWeight: 0
+  rayCount: 50
 --- !u!1 &3870802927296409049
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +67,6 @@ GameObject:
   - component: {fileID: 8280710596056019735}
   - component: {fileID: 8561870329334071573}
   - component: {fileID: 961162103309423265}
-  - component: {fileID: 5982816874136436195}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -138,27 +142,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5982816874136436195
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3870802927296409049}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8078272847561251426
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +153,6 @@ GameObject:
   - component: {fileID: 2328662093470277290}
   - component: {fileID: 4418540910069400334}
   - component: {fileID: 3657132077727659267}
-  - component: {fileID: 2754555441868553710}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -246,26 +228,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2754555441868553710
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8078272847561251426}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
