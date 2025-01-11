@@ -19,11 +19,13 @@ public class BoidBrain : MonoBehaviour
     private Vector3 separation;
     private Vector3 alignment;
     private Vector3 cohesion;
+    private Vector3 obsticleAvoidance;
     [HideInInspector] public float alignmentWeight;
     [HideInInspector] public float cohesionWeight;
     [HideInInspector] public float separationWeight;
+    [HideInInspector] public float obsticleAvoidanceWeight;
 
-    [HideInInspector] public int rayCount = 50;
+    [HideInInspector] public int rayCount;
 
     [HideInInspector] public float sphereColliderRadius;
 
@@ -40,6 +42,8 @@ public class BoidBrain : MonoBehaviour
         inView = 0;
         alignment = Vector3.zero;
         cohesion = Vector3.zero;
+        separation = Vector3.zero;
+        obsticleAvoidance = Vector3.zero;
 
         foreach (GameObject boid in boids)
         {
@@ -60,27 +64,26 @@ public class BoidBrain : MonoBehaviour
             }
 
         }
+        
         if (inView > 0) {
             alignment = alignment / inView;
             cohesion = cohesion / inView;
-            
-            
-
-
-
-            Vector3 weigtedForces = alignment * alignmentWeight + cohesion * cohesionWeight + separation * separationWeight;
-            weigtedForces = weigtedForces.normalized * maxSpeed;
-            steer = Vector3.Lerp(steer, weigtedForces, Time.deltaTime);
             // steer = Vector3.Slerp(steer, cohesion, Time.deltaTime);
             // steer = Vector3.Slerp(steer, -separation, Time.deltaTime);
         }
 
         Vector3 avoidForce = ObsticleAvoidance();
-        if (avoidForce != Vector3.zero)
-        {
-            steer = Vector3.Lerp(steer, avoidForce, Time.deltaTime);
-        }
+        Vector3 weigtedForces = alignment * alignmentWeight + cohesion * cohesionWeight + separation * separationWeight + obsticleAvoidance * obsticleAvoidanceWeight; 
 
+
+
+        weigtedForces = weigtedForces.normalized;
+
+        if (weigtedForces == Vector3.zero)
+        {
+            weigtedForces = steer;
+        }
+        steer = Vector3.Lerp(steer, weigtedForces, Time.deltaTime);
 
         transform.position +=  steer * Time.deltaTime;
         transform.rotation = Quaternion.LookRotation(steer);
@@ -107,7 +110,7 @@ public class BoidBrain : MonoBehaviour
     {
         // Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
         // Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
-        if(Physics.SphereCast(transform.position, sphereColliderRadius, transform.forward, out RaycastHit hit, viewLengh - sphereColliderRadius))
+        if(Physics.SphereCast(transform.position, sphereColliderRadius, transform.forward, out RaycastHit hit, viewLengh + sphereColliderRadius))
         {
             float bestAngle = 360;
             float ExtremeAngle = 0;
@@ -143,14 +146,14 @@ public class BoidBrain : MonoBehaviour
             }
             if (bestDirection != Vector3.zero)
             {
-                          Debug.DrawRay(transform.position, bestDirection * viewLengh, Color.green);
+                Debug.DrawRay(transform.position, bestDirection, Color.green);
                 return bestDirection;
             }
             if (ExtremeDirection == Vector3.zero)
             {
-                return -transform.forward;
+                return -transform.forward * viewLengh;
             }
-            Debug.DrawRay(transform.position, bestDirection * viewLengh, Color.blue);
+            Debug.DrawRay(transform.position, bestDirection, Color.blue);
             return ExtremeDirection;
         }
         return Vector3.zero;

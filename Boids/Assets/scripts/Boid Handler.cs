@@ -8,6 +8,8 @@ public class BoidHandler : MonoBehaviour
     public float cohesionWeight;
     public float separationWeight;
 
+    public float obsticleAvoidanceWeight;
+
     public float Maxspeed;
 
     public float viewLength;
@@ -17,6 +19,10 @@ public class BoidHandler : MonoBehaviour
     public float sepetaionDistance;
 
     public float sphereColliderRadius;
+
+    public int rayCount;
+
+
     [SerializeField] private GameObject boidPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,6 +61,8 @@ public class BoidHandler : MonoBehaviour
             boidScript.fieldOfView = FieldOfView;
             boidScript.sepetaionDistance = sepetaionDistance;
             boidScript.sphereColliderRadius = sphereColliderRadius;
+            boidScript.obsticleAvoidanceWeight = obsticleAvoidanceWeight;
+            boidScript.rayCount = rayCount;
             
 
         }
