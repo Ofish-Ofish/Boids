@@ -72,17 +72,21 @@ public class BoidBrain : MonoBehaviour
             // steer = Vector3.Slerp(steer, -separation, Time.deltaTime);
         }
 
-        Vector3 avoidForce = ObsticleAvoidance();
+        obsticleAvoidance = ObsticleAvoidance();
         Vector3 weigtedForces = alignment * alignmentWeight + cohesion * cohesionWeight + separation * separationWeight + obsticleAvoidance * obsticleAvoidanceWeight; 
 
 
 
-        weigtedForces = weigtedForces.normalized;
+        weigtedForces = weigtedForces.normalized * maxSpeed;
+
+        
 
         if (weigtedForces == Vector3.zero)
         {
             weigtedForces = steer;
         }
+        Debug.DrawRay(transform.position, weigtedForces, Color.green);
+
         steer = Vector3.Lerp(steer, weigtedForces, Time.deltaTime);
 
         transform.position +=  steer * Time.deltaTime;
@@ -123,7 +127,7 @@ public class BoidBrain : MonoBehaviour
                 float phi = Mathf.Acos(1-2*indices/rayCount);
                 float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
 
-                Vector3 normalRay =new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position - transform.position;
+                Vector3 normalRay =new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position ;
                 // Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
 
                 Physics.Raycast(transform.position, normalRay, out RaycastHit hit2, viewLengh);
@@ -131,7 +135,7 @@ public class BoidBrain : MonoBehaviour
                 {
                     continue;
                 }
-                if (hit2.collider == hit.collider && Vector3.Angle(transform.forward, normalRay) > ExtremeAngle)
+                if (Vector3.Angle(transform.forward, normalRay) > ExtremeAngle)
                 {
                     ExtremeDirection = normalRay;
                     ExtremeAngle = Vector3.Angle(transform.forward, normalRay);
@@ -146,15 +150,12 @@ public class BoidBrain : MonoBehaviour
             }
             if (bestDirection != Vector3.zero)
             {
-                Debug.DrawRay(transform.position, bestDirection, Color.green);
+                // Debug.DrawRay(transform.position, bestDirection *  viewLengh, Color.green);
                 return bestDirection;
             }
-            if (ExtremeDirection == Vector3.zero)
-            {
-                return -transform.forward * viewLengh;
-            }
-            Debug.DrawRay(transform.position, bestDirection, Color.blue);
-            return ExtremeDirection;
+            // Debug.DrawRay(transform.position, bestDirection * viewLengh, Color.blue);
+
+            return ExtremeDirection ;
         }
         return Vector3.zero;
     }
