@@ -153,14 +153,14 @@ MonoBehaviour:
   alignmentWeight: 1
   cohesionWeight: 1.8
   separationWeight: 3.5
-  obsticleAvoidanceWeight: 0
+  obsticleAvoidanceWeight: 1
   Maxspeed: 20
   viewLength: 20
   FieldOfView: 160
-  BoidCount: 100
+  BoidCount: 1
   sepetaionDistance: 10
   sphereColliderRadius: 14
-  rayCount: 20
+  rayCount: 1000
   boidPrefab: {fileID: 643566248072515131, guid: ca6115f3eccc1e1468bc5e88a1be7ae1,
     type: 3}
 --- !u!4 &621608119
@@ -452,7 +452,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 50, y: 50, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 101, y: 1, z: 101}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1508413086}
@@ -628,7 +628,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 50, z: 50}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 101, y: 1, z: 101}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1508413086}
@@ -881,7 +881,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -50, y: 50, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 101, y: 1, z: 101}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1508413086}
@@ -989,7 +989,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 50, z: -50}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 101, y: 1, z: 101}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1508413086}
