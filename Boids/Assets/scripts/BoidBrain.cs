@@ -145,71 +145,20 @@ public class BoidBrain : MonoBehaviour
             {
                 continue;
             }
+            if (Vector3.Angle(transform.forward, normalRay) < (180 - fieldOfView) *3f)
+            {
+                continue;
+            }
+
             if (Vector3.Angle(transform.forward, normalRay) < bestAngle)
             {
                 besrtDir = normalRay;
                 bestAngle = Vector3.Angle(transform.forward, normalRay);
             }
 
-            Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
+            // Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
         }
+        Debug.DrawRay(transform.position, besrtDir * viewLengh * 2f, Color.black);
         return besrtDir;
     }
-
-    // private Vector3 ObsticleAvoidance()
-    // {
-    //     // Ray ray = new Ray(transform.position, transform.forward * viewLengh); 
-    //     // Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
-    //     // if(Physics.SphereCast(transform.position, sphereColliderRadius, transform.forward, out RaycastHit hit, viewLengh + sphereColliderRadius))
-    //     // {
-    //         Debug.Log(hit.collider.gameObject.name);
-    //         float mediumAngle = 360;
-    //         float ExtremeAngle = 0;
-    //         Vector3 mediumDirection = Vector3.zero;
-    //         Vector3 ExtremeDirection = Vector3.zero;
-
-    //         for (int i = 0; i < rayCount; i++)
-    //         {
-    //             float indices = i + .5f;
-    //             float phi = Mathf.Acos(1-2*indices/rayCount);
-    //             float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
-
-    //             Vector3 normalRay =new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi));
-
-    //             Physics.Raycast(transform.position, normalRay, out RaycastHit hit2, viewLengh);
-    //             // Debug.DrawRay(transform.position, normalRay * viewLengh, Color.blue);
-    //             if (Vector3.Angle(transform.forward, normalRay) > fieldOfView)
-    //             {
-    //                 Debug.DrawRay(transform.position, normalRay * viewLengh, Color.red);
-    //                 continue;
-    //             }
-    //             if (Vector3.Angle(transform.forward, normalRay) > ExtremeAngle)
-    //             {
-    //                 Debug.DrawRay(transform.position, normalRay * viewLengh, Color.blue);
-    //                 ExtremeDirection = normalRay;
-    //                 ExtremeAngle = Vector3.Angle(transform.forward, normalRay);
-    //             }
-    //             if (hit2.collider != hit.collider && Vector3.Angle(transform.forward, normalRay) < mediumAngle)
-    //             {
-    //                 Debug.DrawRay(transform.position, normalRay * viewLengh, Color.green);
-    //                 mediumDirection = normalRay;
-    //                 mediumAngle = Vector3.Angle(transform.forward, normalRay);
-
-    //             }
-
-    //         }
-    //         if (mediumDirection != Vector3.zero)
-    //         {
-    //             Debug.DrawRay(transform.position, mediumDirection *  viewLengh, Color.black);
-    //             return mediumDirection;
-    //         }
-    //         Debug.DrawRay(transform.position, ExtremeDirection * viewLengh, Color.yellow);
-    //         return ExtremeDirection ;
-    //     // }
-    //     return Vector3.zero;
-    // }
-
-
-
-
 }

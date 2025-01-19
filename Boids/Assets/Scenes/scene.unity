@@ -150,14 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c545a829035c24f950f28da21d6feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alignmentWeight: 1
-  cohesionWeight: 1.8
-  separationWeight: 3.5
-  obsticleAvoidanceWeight: 1
-  Maxspeed: 10
+  alignmentWeight: 1.5
+  cohesionWeight: 12
+  separationWeight: 15
+  obsticleAvoidanceWeight: 3.402823e+38
+  Maxspeed: 20
   viewLength: 20
   FieldOfView: 160
-  BoidCount: 1
+  BoidCount: 100
   sepetaionDistance: 10
   sphereColliderRadius: 14
   rayCount: 50
