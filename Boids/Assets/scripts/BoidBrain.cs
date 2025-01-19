@@ -116,6 +116,7 @@ public class BoidBrain : MonoBehaviour
         // Debug.DrawRay(ray.origin, ray.direction * viewLengh, Color.green);
         if(Physics.SphereCast(transform.position, sphereColliderRadius, transform.forward, out RaycastHit hit, viewLengh + sphereColliderRadius))
         {
+            Debug.Log(hit.collider.gameObject.name);
             float bestAngle = 360;
             float ExtremeAngle = 0;
             Vector3 bestDirection = Vector3.zero;
@@ -127,18 +128,18 @@ public class BoidBrain : MonoBehaviour
                 float phi = Mathf.Acos(1-2*indices/rayCount);
                 float theta = Mathf.PI * (1 + Mathf.Sqrt(5)) * indices;
 
-                Vector3 normalRay =new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)) + transform.position ;
-                // Debug.DrawRay(points[i], (points[i] - transform.position) * viewLengh, Color.red);
+                Vector3 normalRay =new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi));
 
                 Physics.Raycast(transform.position, normalRay, out RaycastHit hit2, viewLengh);
+                // Debug.DrawRay(transform.position, normalRay * viewLengh, Color.blue);
                 if (Vector3.Angle(transform.forward, normalRay) > fieldOfView)
                 {
-                    Debug.DrawRay(transform.position, normalRay * viewLengh, Color.blue);
+                    Debug.DrawRay(transform.position, normalRay * viewLengh, Color.red);
                     continue;
                 }
                 if (Vector3.Angle(transform.forward, normalRay) > ExtremeAngle)
                 {
-                    Debug.DrawRay(transform.position, normalRay * viewLengh, Color.red);
+                    Debug.DrawRay(transform.position, normalRay * viewLengh, Color.blue);
                     ExtremeDirection = normalRay;
                     ExtremeAngle = Vector3.Angle(transform.forward, normalRay);
                 }
@@ -153,10 +154,10 @@ public class BoidBrain : MonoBehaviour
             }
             if (bestDirection != Vector3.zero)
             {
-                // Debug.DrawRay(transform.position, bestDirection *  viewLengh, Color.green);
+                Debug.DrawRay(transform.position, bestDirection *  viewLengh, Color.black);
                 return bestDirection;
             }
-            // Debug.DrawRay(transform.position, bestDirection * viewLengh, Color.blue);
+            Debug.DrawRay(transform.position, ExtremeDirection * viewLengh, Color.yellow);
             return ExtremeDirection ;
         }
         return Vector3.zero;
