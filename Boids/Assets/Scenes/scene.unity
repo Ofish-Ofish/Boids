@@ -161,7 +161,7 @@ MonoBehaviour:
   sepetaionDistance: 10
   sphereColliderRadius: 14
   rayCount: 50
-  boidPrefab: {fileID: 643566248072515131, guid: ca6115f3eccc1e1468bc5e88a1be7ae1,
+  boidPrefab: {fileID: 1389239127315213626, guid: fb70f1e678688dc4f927a5f25c1f3365,
     type: 3}
 --- !u!4 &621608119
 Transform:
@@ -416,13 +416,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108652458}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -100, y: 150, z: -100}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 64.9, z: -138.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1163609056
 GameObject:
   m_ObjectHideFlags: 0

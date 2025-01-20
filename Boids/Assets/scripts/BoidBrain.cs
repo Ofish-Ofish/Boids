@@ -125,8 +125,8 @@ public class BoidBrain : MonoBehaviour
             return Vector3.zero;
         }
 
-        Debug.Log("hit: " + hit.collider.gameObject.name);
-        Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
+        // Debug.Log("hit: " + hit.collider.gameObject.name);
+        // Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
         for (int i = 0; i < rayCount; i++)
         {
             float indices = i + .5f;
@@ -158,7 +158,7 @@ public class BoidBrain : MonoBehaviour
 
             // Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
         }
-        Debug.DrawRay(transform.position, besrtDir * viewLengh * 2f, Color.black);
+        // Debug.DrawRay(transform.position, besrtDir * viewLengh * 2f, Color.black);
         return besrtDir;
     }
 }

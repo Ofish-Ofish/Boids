@@ -32,6 +32,7 @@ public class BoidHandler : MonoBehaviour
         for (int i = 0; i < BoidCount; i++)
         {
             boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-30, 30), Random.Range(20, 80), Random.Range(-30, 30)), Quaternion.identity);
+
         }
 
         settingsChanges();
