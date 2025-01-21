@@ -117,7 +117,7 @@ public class BoidBrain : MonoBehaviour
     private Vector3 ObsticleAvoidance()
     {
         float bestAngle = 180.0f;
-        Vector3 besrtDir = transform.forward;
+        Vector3 bestDir = transform.forward;
 
         Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, viewLengh);
         if (hit.collider == null)
@@ -152,13 +152,13 @@ public class BoidBrain : MonoBehaviour
 
             if (Vector3.Angle(transform.forward, normalRay) < bestAngle)
             {
-                besrtDir = normalRay;
+                bestDir = normalRay;
                 bestAngle = Vector3.Angle(transform.forward, normalRay);
             }
 
             // Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
         }
         // Debug.DrawRay(transform.position, besrtDir * viewLengh * 2f, Color.black);
-        return besrtDir;
+        return bestDir;
     }
 }
