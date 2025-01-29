@@ -152,14 +152,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentWeight: 10
   cohesionWeight: 6
-  separationWeight: 1
-  obsticleAvoidanceWeight: 100
+  separationWeight: 1.5
+  obsticleAvoidanceWeight: 1000
   Maxspeed: 0.8
   viewLength: 0.8
-  FieldOfView: 120
+  FieldOfView: 135
   BoidCount: 100
-  sepetaionDistance: 0.4
+  sepetaionDistance: 0.5
   rayCount: 100
+  halfBoxLenght: 2
   boidPrefab: {fileID: 1389239127315213626, guid: fb70f1e678688dc4f927a5f25c1f3365,
     type: 3}
 --- !u!4 &621608119

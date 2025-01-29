@@ -3,48 +3,35 @@ using UnityEngine;
 public class BoidHandler : MonoBehaviour
 {
     private GameObject[] boids;
-
     public float alignmentWeight;
     public float cohesionWeight;
     public float separationWeight;
-
     public float obsticleAvoidanceWeight;
-
     public float Maxspeed;
-
     public float viewLength;
     public float FieldOfView;
-
     public int BoidCount;
     public float sepetaionDistance;
-
     public int rayCount;
-
-
+    [SerializeField] private float halfBoxLenght;
     [SerializeField] private GameObject boidPrefab;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         boids = new GameObject[BoidCount];
         for (int i = 0; i < BoidCount; i++)
         {
-            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(.8f, 1.2f), Random.Range(-1.2f, 1.2f)), Quaternion.identity);
+            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-(halfBoxLenght - Maxspeed), (halfBoxLenght - Maxspeed)), Random.Range(Maxspeed, (halfBoxLenght - Maxspeed)), Random.Range(-(halfBoxLenght - Maxspeed), (halfBoxLenght - Maxspeed))), Quaternion.identity);
 
         }
-
         settingsChanges();
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown( KeyCode.Return))
         {
             settingsChanges();
         }
-
     }
 
     private void settingsChanges() {
@@ -61,8 +48,6 @@ public class BoidHandler : MonoBehaviour
             boidScript.sepetaionDistance = sepetaionDistance;
             boidScript.obsticleAvoidanceWeight = obsticleAvoidanceWeight;
             boidScript.rayCount = rayCount;
-            
-
         }
 
     }
