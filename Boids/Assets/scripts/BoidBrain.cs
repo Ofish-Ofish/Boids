@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using NUnit.Framework;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -110,12 +107,38 @@ public class BoidBrain : MonoBehaviour
         float bestAngle = 180.0f; 
         Vector3 bestDir = transform.forward;
 
-        Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, viewLengh);
-        // Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
-        if (hit.collider == null)
+
+
+        Vector3 stright = transform.forward;
+        Vector3 up = Quaternion.AngleAxis(15, transform.up) * transform.forward;
+        Vector3 down = Quaternion.AngleAxis(-15, transform.up) * transform.forward;
+        Vector3 left = Quaternion.AngleAxis(-15, transform.right) * transform.forward;
+        Vector3 right = Quaternion.AngleAxis(15, transform.right) * transform.forward;
+
+        Physics.Raycast(transform.position, stright, out RaycastHit hit, viewLengh);
+        Physics.Raycast(transform.position, up, out RaycastHit hit2, viewLengh);
+        Physics.Raycast(transform.position, down, out RaycastHit hit3, viewLengh);
+        Physics.Raycast(transform.position, left, out RaycastHit hit4, viewLengh);
+        Physics.Raycast(transform.position, right, out RaycastHit hit5, viewLengh);
+
+        // Debug.DrawRay(transform.position, stright * viewLengh, Color.white);
+        // Debug.DrawRay(transform.position, up * viewLengh, Color.white);
+        // Debug.DrawRay(transform.position, down * viewLengh, Color.white);
+        // Debug.DrawRay(transform.position, left * viewLengh, Color.white);
+        // Debug.DrawRay(transform.position, right * viewLengh, Color.white);
+
+        if (hit.collider == null && hit2.collider == null && hit3.collider == null && hit4.collider == null && hit5.collider == null)
         {
             return Vector3.zero;
         }
+
+
+        
+        // Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
+        // if (hit.collider == null)
+        // {
+        //     return Vector3.zero;
+        // }
         // Debug.Log("hit: " + hit.collider.gameObject.name);
 
         for (int i = 0; i < rayCount; i++)
@@ -127,8 +150,8 @@ public class BoidBrain : MonoBehaviour
 
             Vector3 normalRay = new Vector3(Mathf.Cos(theta) * Mathf.Sin(phi), Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(phi)).normalized;
 
-            Physics.Raycast(transform.position, normalRay, out RaycastHit hit2, viewLengh * 2f);
-            if (hit2.collider != null)
+            Physics.Raycast(transform.position, normalRay, out RaycastHit blockedPath, viewLengh * 2f);
+            if (blockedPath.collider != null)
             {
                 continue;
             }
