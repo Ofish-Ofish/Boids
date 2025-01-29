@@ -151,13 +151,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alignmentWeight: 10
-  cohesionWeight: 2
+  cohesionWeight: 6
   separationWeight: 1
-  obsticleAvoidanceWeight: 10000
+  obsticleAvoidanceWeight: 100
   Maxspeed: 0.8
   viewLength: 0.8
   FieldOfView: 120
-  BoidCount: 20
+  BoidCount: 100
   sepetaionDistance: 0.4
   rayCount: 100
   boidPrefab: {fileID: 1389239127315213626, guid: fb70f1e678688dc4f927a5f25c1f3365,

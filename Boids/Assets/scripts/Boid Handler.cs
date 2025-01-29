@@ -29,7 +29,7 @@ public class BoidHandler : MonoBehaviour
         boids = new GameObject[BoidCount];
         for (int i = 0; i < BoidCount; i++)
         {
-            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-1.8f, 1.8f), Random.Range(.2f, 1.8f), Random.Range(-1.8f, 1.8f)), Quaternion.identity);
+            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(.8f, 1.2f), Random.Range(-1.2f, 1.2f)), Quaternion.identity);
 
         }
 

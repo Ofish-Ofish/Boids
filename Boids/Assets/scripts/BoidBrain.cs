@@ -156,9 +156,9 @@ public class BoidBrain : MonoBehaviour
                 bestAngle = Vector3.Angle(transform.forward, normalRay);
             }
 
-            Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
+            // Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
         }
-        Debug.DrawRay(transform.position, bestDir * viewLengh * 2f, Color.black);
+        Debug.DrawRay(transform.position, bestDir * viewLengh * 2f, Color.green);
         return bestDir;
     }
 }
