@@ -18,8 +18,6 @@ public class BoidHandler : MonoBehaviour
     public int BoidCount;
     public float sepetaionDistance;
 
-    public float sphereColliderRadius;
-
     public int rayCount;
 
 
@@ -31,7 +29,7 @@ public class BoidHandler : MonoBehaviour
         boids = new GameObject[BoidCount];
         for (int i = 0; i < BoidCount; i++)
         {
-            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-30, 30), Random.Range(20, 80), Random.Range(-30, 30)), Quaternion.identity);
+            boids[i] = Instantiate(boidPrefab, new Vector3(Random.Range(-1.8f, 1.8f), Random.Range(.2f, 1.8f), Random.Range(-1.8f, 1.8f)), Quaternion.identity);
 
         }
 
@@ -61,7 +59,6 @@ public class BoidHandler : MonoBehaviour
             boidScript.viewLengh = viewLength;
             boidScript.fieldOfView = FieldOfView;
             boidScript.sepetaionDistance = sepetaionDistance;
-            boidScript.sphereColliderRadius = sphereColliderRadius;
             boidScript.obsticleAvoidanceWeight = obsticleAvoidanceWeight;
             boidScript.rayCount = rayCount;
             

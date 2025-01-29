@@ -31,7 +31,6 @@ public class BoidBrain : MonoBehaviour
 
     [HideInInspector] public int rayCount;
 
-    [HideInInspector] public float sphereColliderRadius;
 
 
     void Start()
@@ -88,7 +87,7 @@ public class BoidBrain : MonoBehaviour
         {
             weigtedForces = steer;
         }
-        // Debug.DrawRay(transform.position, weigtedForces, Color.red);
+        Debug.DrawRay(transform.position, weigtedForces, Color.red);
 
         steer = Vector3.Lerp(steer, weigtedForces, Time.deltaTime);
 
@@ -120,13 +119,14 @@ public class BoidBrain : MonoBehaviour
         Vector3 bestDir = transform.forward;
 
         Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, viewLengh);
+        Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
         if (hit.collider == null)
         {
             return Vector3.zero;
         }
 
-        // Debug.Log("hit: " + hit.collider.gameObject.name);
-        // Debug.DrawRay(transform.position, transform.forward * viewLengh, Color.white);
+        Debug.Log("hit: " + hit.collider.gameObject.name);
+
         for (int i = 0; i < rayCount; i++)
         {
             float indices = i + .5f;
@@ -145,7 +145,7 @@ public class BoidBrain : MonoBehaviour
             {
                 continue;
             }
-            if (Vector3.Angle(transform.forward, normalRay) < (180 - fieldOfView) *3f)
+            if (Vector3.Angle(transform.forward, normalRay) < 60f)
             {
                 continue;
             }
@@ -156,9 +156,9 @@ public class BoidBrain : MonoBehaviour
                 bestAngle = Vector3.Angle(transform.forward, normalRay);
             }
 
-            // Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
+            Debug.DrawRay(transform.position, normalRay * viewLengh * 2f, Color.green);
         }
-        // Debug.DrawRay(transform.position, besrtDir * viewLengh * 2f, Color.black);
+        Debug.DrawRay(transform.position, bestDir * viewLengh * 2f, Color.black);
         return bestDir;
     }
 }
