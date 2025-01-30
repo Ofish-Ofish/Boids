@@ -17,6 +17,7 @@ public class BoidHandler : MonoBehaviour
     [SerializeField] private GameObject boidPrefab;
     void Start()
     {
+        BoidCount = GameObject.FindGameObjectWithTag("save").GetComponent<save>().boidCount;
         boids = new GameObject[BoidCount];
         for (int i = 0; i < BoidCount; i++)
         {
