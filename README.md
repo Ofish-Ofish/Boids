@@ -9,7 +9,7 @@ A Unity 3D implementation of the Boid algorithm with object avoidance. This proj
 
 ## Website
 
-[Add your website link here]
+https://ofish-ofish.itch.io/boids
 
 ## Future Additions
 
